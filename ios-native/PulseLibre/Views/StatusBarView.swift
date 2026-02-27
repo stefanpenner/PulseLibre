@@ -4,22 +4,28 @@ struct StatusBarView: View {
     @ObservedObject var vm: SessionViewModel
 
     var body: some View {
+        if vm.ble.isConnected {
+            connectedBar
+        } else {
+            disconnectedBar
+        }
+    }
+
+    private var connectedBar: some View {
         HStack(spacing: 16) {
-            // Connection
             HStack(spacing: 6) {
                 Circle()
-                    .fill(vm.ble.isConnected ? Theme.connectedGreen : Theme.disconnectedRed)
+                    .fill(Theme.connectedGreen)
                     .frame(width: 8, height: 8)
-                    .shadow(color: vm.ble.isConnected ? Theme.connectedGreen.opacity(0.6) : Theme.disconnectedRed.opacity(0.6), radius: 4)
+                    .shadow(color: Theme.connectedGreen.opacity(0.6), radius: 4)
 
-                Text(vm.ble.isConnected ? "Connected" : "Disconnected")
+                Text("Connected")
                     .font(.caption2.weight(.medium))
                     .foregroundStyle(Theme.textSecondary)
             }
 
             Spacer()
 
-            // Battery
             if let pct = vm.ble.batteryPercentage {
                 HStack(spacing: 4) {
                     Image(systemName: batteryIcon(pct))
@@ -36,7 +42,6 @@ struct StatusBarView: View {
                         .font(.caption2.monospacedDigit().weight(.medium))
                         .foregroundStyle(Theme.textSecondary)
 
-                    // Charging
                     if let charging = vm.ble.isCharging, charging {
                         Image(systemName: "bolt.fill")
                             .font(.caption2)
@@ -48,6 +53,59 @@ struct StatusBarView: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
         .glassEffect(.regular, in: .capsule)
+    }
+
+    private var disconnectedBar: some View {
+        Button(action: {
+            if vm.ble.isScanning {
+                vm.ble.cancelScan()
+            } else {
+                vm.scan()
+            }
+        }) {
+            HStack(spacing: 8) {
+                Circle()
+                    .fill(vm.ble.isScanning ? Theme.accentAmber : Theme.disconnectedRed)
+                    .frame(width: 8, height: 8)
+                    .shadow(color: (vm.ble.isScanning ? Theme.accentAmber : Theme.disconnectedRed).opacity(0.6), radius: 4)
+
+                if vm.ble.isScanning {
+                    Text("Scanning...")
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(Theme.textSecondary)
+
+                    Spacer()
+
+                    HStack(spacing: 4) {
+                        ProgressView()
+                            .tint(Theme.textSecondary)
+                            .controlSize(.small)
+                        Text("Cancel")
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(Theme.accentAmber)
+                    }
+                } else {
+                    Text("Disconnected")
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(Theme.textSecondary)
+
+                    Spacer()
+
+                    HStack(spacing: 4) {
+                        Image(systemName: "antenna.radiowaves.left.and.right")
+                            .font(.caption2)
+                        Text("Tap to Scan")
+                            .font(.caption2.weight(.semibold))
+                    }
+                    .foregroundStyle(Theme.accentBlue)
+                }
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
+            .contentShape(.capsule)
+            .glassEffect(.regular, in: .capsule)
+        }
+        .buttonStyle(.plain)
     }
 
     private func batteryIcon(_ pct: Int) -> String {

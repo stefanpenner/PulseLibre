@@ -5,14 +5,14 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Theme.backgroundGradient
+            AnimatedBackground(feeling: vm.selectedFeeling)
                 .ignoresSafeArea()
 
             GlassEffectContainer {
                 VStack(spacing: 16) {
                     StatusBarView(vm: vm)
-                    ModePicker(vm: vm)
-                    ModeDescriptionView(mode: vm.selectedMode)
+                    FeelingPicker(vm: vm)
+                    ModeDescriptionView(mode: vm.selectedMode, feeling: vm.selectedFeeling)
                         .animation(.default, value: vm.selectedMode)
                     if vm.selectedMode == .calm && vm.isRunning {
                         BreathingGuideView(vm: vm)
@@ -34,9 +34,18 @@ struct ContentView: View {
 
 private struct ModeDescriptionView: View {
     let mode: StimulationMode
+    var feeling: AutonomicState? = nil
 
     var body: some View {
         VStack(spacing: 5) {
+            if let reason = feeling?.suggestionReason, !reason.isEmpty {
+                Text(reason)
+                    .font(.caption2)
+                    .foregroundStyle(mode.accentColor.opacity(0.85))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 12)
+            }
+
             Text(mode.summary)
                 .font(.caption2)
                 .foregroundStyle(Theme.textSecondary)

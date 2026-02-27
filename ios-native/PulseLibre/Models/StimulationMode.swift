@@ -135,3 +135,71 @@ enum StimulationMode: String, CaseIterable, Identifiable {
         }
     }
 }
+
+enum AutonomicState: String, CaseIterable, Identifiable {
+    case sympathetic
+    case dorsalVagal
+    case ventralVagal
+    case pain
+    case calm
+    case custom
+
+    var id: String { rawValue }
+
+    var label: String {
+        switch self {
+        case .sympathetic:  "Wired / Tense"
+        case .dorsalVagal:  "Foggy / Stuck"
+        case .ventralVagal: "Good / Balanced"
+        case .pain:         "In Pain"
+        case .calm:         "Calm / Centered"
+        case .custom:       "Custom"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .sympathetic:  "bolt.heart.fill"
+        case .dorsalVagal:  "cloud.fog.fill"
+        case .ventralVagal: "checkmark.circle.fill"
+        case .pain:         "cross.fill"
+        case .calm:         "wind"
+        case .custom:       "slider.horizontal.3"
+        }
+    }
+
+    var primaryMode: StimulationMode {
+        switch self {
+        case .sympathetic:  .stressRelief
+        case .dorsalVagal:  .focus
+        case .ventralVagal: .sleep
+        case .pain:         .painRelief
+        case .calm:         .calm
+        case .custom:       .custom
+        }
+    }
+
+    var suggestionReason: String {
+        switch self {
+        case .sympathetic:  "Helps bring you down from a wired, anxious state"
+        case .dorsalVagal:  "Gentle activation to lift you out of brain fog"
+        case .ventralVagal: "Ease into restful sleep from a calm place"
+        case .pain:         "Targeted stimulation pattern for pain relief"
+        case .calm:         "Respiratory-gated breathing to deepen your calm"
+        case .custom:       ""
+        }
+    }
+
+    var subtitle: String {
+        switch self {
+        case .sympathetic:  "anxious, tense"
+        case .dorsalVagal:  "stuck, flat"
+        case .ventralVagal: "balanced"
+        case .pain:         "hurting"
+        case .calm:         "centered"
+        case .custom:       "manual"
+        }
+    }
+
+    var accentColor: Color { primaryMode.accentColor }
+}

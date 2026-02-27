@@ -18,6 +18,7 @@ final class BluetoothManager: NSObject, ObservableObject {
     private var peripheral: CBPeripheral?
     private var rxCharacteristic: CBCharacteristic?
     private var scanTimeoutTask: Task<Void, Never>?
+    private var pendingScan = false
 
     override init() {
         super.init()
@@ -28,10 +29,13 @@ final class BluetoothManager: NSObject, ObservableObject {
 
     func scan() {
         guard centralManager.state == .poweredOn else {
-            logger.warning("Cannot scan — Bluetooth not powered on")
+            logger.warning("Cannot scan — Bluetooth state: \(self.centralManager.state.rawValue)")
+            // Queue scan for when Bluetooth becomes ready
+            pendingScan = true
             return
         }
         guard !isScanning, !isConnected else { return }
+        pendingScan = false
 
         logger.info("Starting scan...")
         isScanning = true
@@ -47,6 +51,12 @@ final class BluetoothManager: NSObject, ObservableObject {
             self.logger.info("Scan timed out")
             self.stopScan()
         }
+    }
+
+    func cancelScan() {
+        guard isScanning else { return }
+        logger.info("Scan cancelled by user")
+        stopScan()
     }
 
     func disconnect() {
@@ -92,7 +102,11 @@ extension BluetoothManager: CBCentralManagerDelegate {
         Task { @MainActor in
             logger.info("Bluetooth state: \(central.state.rawValue)")
             if central.state == .poweredOn {
-                scan()
+                if pendingScan {
+                    scan()
+                } else if !isConnected {
+                    scan()
+                }
             }
         }
     }

@@ -20,8 +20,9 @@
 		B1000000000000000000000B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000B /* Assets.xcassets */; };
 		B1000000000000000000000C /* StimulationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000D /* StimulationMode.swift */; };
 		B1000000000000000000000D /* ModeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000E /* ModeEngine.swift */; };
-		B1000000000000000000000E /* ModePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000F /* ModePicker.swift */; };
 		B1000000000000000000000F /* BreathingGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000010 /* BreathingGuideView.swift */; };
+		B10000000000000000000010 /* FeelingPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000011 /* FeelingPicker.swift */; };
+		B10000000000000000000011 /* AnimatedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* AnimatedBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,8 +40,9 @@
 		A1000000000000000000000C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1000000000000000000000D /* StimulationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StimulationMode.swift; sourceTree = "<group>"; };
 		A1000000000000000000000E /* ModeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeEngine.swift; sourceTree = "<group>"; };
-		A1000000000000000000000F /* ModePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModePicker.swift; sourceTree = "<group>"; };
 		A10000000000000000000010 /* BreathingGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingGuideView.swift; sourceTree = "<group>"; };
+		A10000000000000000000011 /* FeelingPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeelingPicker.swift; sourceTree = "<group>"; };
+		A10000000000000000000012 /* AnimatedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackground.swift; sourceTree = "<group>"; };
 		D10000000000000000000001 /* PulseLibre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PulseLibre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -112,8 +114,9 @@
 				A10000000000000000000008 /* StrengthCardView.swift */,
 				A10000000000000000000009 /* ActionButtonView.swift */,
 				A1000000000000000000000A /* Theme.swift */,
-				A1000000000000000000000F /* ModePicker.swift */,
 				A10000000000000000000010 /* BreathingGuideView.swift */,
+				A10000000000000000000011 /* FeelingPicker.swift */,
+				A10000000000000000000012 /* AnimatedBackground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -203,8 +206,9 @@
 				B1000000000000000000000A /* Theme.swift in Sources */,
 				B1000000000000000000000C /* StimulationMode.swift in Sources */,
 				B1000000000000000000000D /* ModeEngine.swift in Sources */,
-				B1000000000000000000000E /* ModePicker.swift in Sources */,
 				B1000000000000000000000F /* BreathingGuideView.swift in Sources */,
+				B10000000000000000000010 /* FeelingPicker.swift in Sources */,
+				B10000000000000000000011 /* AnimatedBackground.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
