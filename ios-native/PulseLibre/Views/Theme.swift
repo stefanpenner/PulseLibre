@@ -18,6 +18,7 @@ enum Theme {
     // Text
     static let textPrimary = Color.white
     static let textSecondary = Color(hex: 0x9CA3AF)
+    static let textTertiary = Color(hex: 0x6B7280)
 
     // Status
     static let connectedGreen = Color(hex: 0x10B981)
@@ -31,6 +32,23 @@ enum Theme {
             endPoint: .bottom
         )
     }
+
+    // MARK: - Type Scale
+
+    /// Section headers: "SESSION TIMER", "INTENSITY LEVEL"
+    static let sectionLabel = Font.caption.weight(.semibold).width(.expanded)
+    /// Card subtitles: mode name, effective strength
+    static let cardSubtitle = Font.caption2.weight(.medium)
+    /// Hero numbers: timer display
+    static let heroTimer = Font.system(size: 54, weight: .light, design: .monospaced)
+    /// Large numbers: strength badge
+    static let heroNumber = Font.system(size: 30, weight: .semibold, design: .rounded)
+    /// Mode status text
+    static let statusLabel = Font.caption.weight(.medium)
+    /// Button text
+    static let buttonLabel = Font.body.weight(.semibold)
+    /// Breathing phase label
+    static let breathingLabel = Font.title3.weight(.regular)
 }
 
 extension Color {

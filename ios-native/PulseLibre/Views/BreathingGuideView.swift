@@ -25,9 +25,9 @@ struct BreathingGuideView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 14) {
             Text(phaseText)
-                .font(.title3.weight(.medium))
+                .font(Theme.breathingLabel)
                 .foregroundStyle(isActive ? Theme.accentCyan : Theme.textSecondary)
                 .contentTransition(.opacity)
                 .animation(.easeInOut(duration: 0.3), value: phaseText)
@@ -35,15 +35,15 @@ struct BreathingGuideView: View {
             ZStack {
                 // Outer ring
                 Circle()
-                    .stroke(Color.white.opacity(0.1), lineWidth: 2)
+                    .stroke(Color.white.opacity(0.08), lineWidth: 1.5)
                     .frame(width: 140, height: 140)
 
                 // Breathing circle
                 Circle()
                     .fill(
                         isActive
-                            ? Theme.accentCyan.opacity(0.3)
-                            : Color.white.opacity(0.1)
+                            ? Theme.accentCyan.opacity(0.25)
+                            : Color.white.opacity(0.08)
                     )
                     .frame(width: 120, height: 120)
                     .scaleEffect(circleScale)
@@ -53,7 +53,7 @@ struct BreathingGuideView: View {
                 Circle()
                     .fill(
                         isActive
-                            ? Theme.accentCyan.opacity(0.15)
+                            ? Theme.accentCyan.opacity(0.12)
                             : Color.clear
                     )
                     .frame(width: 60, height: 60)
@@ -63,7 +63,7 @@ struct BreathingGuideView: View {
 
                 // Timer overlay
                 Text(vm.displayTime)
-                    .font(.system(size: 28, weight: .bold, design: .monospaced))
+                    .font(.system(size: 26, weight: .light, design: .monospaced))
                     .foregroundStyle(Theme.textPrimary)
                     .contentTransition(.numericText())
                     .animation(.default, value: vm.remainingSeconds)
@@ -71,8 +71,8 @@ struct BreathingGuideView: View {
 
             if !vm.modeStatus.isEmpty {
                 Text(vm.modeStatus)
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(isActive ? Theme.accentCyan : Theme.textSecondary)
+                    .font(Theme.statusLabel)
+                    .foregroundStyle(isActive ? Theme.accentCyan.opacity(0.8) : Theme.textTertiary)
                     .contentTransition(.opacity)
                     .animation(.default, value: vm.modeStatus)
             }
@@ -80,17 +80,17 @@ struct BreathingGuideView: View {
             // Progress bar
             GeometryReader { geo in
                 Capsule()
-                    .fill(Color.white.opacity(0.15))
-                    .frame(height: 4)
+                    .fill(Color.white.opacity(0.1))
+                    .frame(height: 3)
                     .overlay(alignment: .leading) {
                         Capsule()
                             .fill(Theme.accentCyan)
-                            .shadow(color: Theme.accentCyan.opacity(0.5), radius: 4)
+                            .shadow(color: Theme.accentCyan.opacity(0.4), radius: 4)
                             .frame(width: geo.size.width * vm.progress)
                             .animation(.linear(duration: 1), value: vm.progress)
                     }
             }
-            .frame(height: 4)
+            .frame(height: 3)
             .padding(.horizontal, 20)
         }
         .padding(24)

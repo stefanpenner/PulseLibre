@@ -8,6 +8,7 @@ final class BluetoothManager: NSObject, ObservableObject {
     @Published var isScanning = false
     @Published var isReady = false
     @Published var batteryPercentage: Int?
+    @Published var batteryVoltage: Double?
     @Published var isCharging: Bool?
 
     var onDisconnect: (@MainActor () -> Void)?
@@ -79,6 +80,7 @@ final class BluetoothManager: NSObject, ObservableObject {
         isConnected = false
         isReady = false
         batteryPercentage = nil
+        batteryVoltage = nil
         isCharging = nil
     }
 }
@@ -206,6 +208,7 @@ extension BluetoothManager: CBPeripheralDelegate {
             if let voltage = Double(numericChars), voltage > 0 {
                 let pct = BLEConstants.batteryPercentage(fromVoltage: voltage)
                 Task { @MainActor in
+                    self.batteryVoltage = voltage
                     self.batteryPercentage = pct
                 }
             }

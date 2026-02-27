@@ -4,35 +4,37 @@ struct StrengthCardView: View {
     @ObservedObject var vm: SessionViewModel
 
     var body: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 2) {
-                Text("Intensity Level")
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(Theme.textSecondary)
+        VStack(spacing: 14) {
+            // Section header
+            VStack(spacing: 4) {
+                Text("INTENSITY")
+                    .font(Theme.sectionLabel)
+                    .foregroundStyle(Theme.textTertiary)
+                    .tracking(1.5)
 
                 if let eff = vm.effectiveStrength, vm.isRunning {
-                    Text(eff == 0 ? "Paused" : "Active: \(eff)")
-                        .font(.caption.weight(.semibold))
+                    Text(eff == 0 ? "Off" : "Active: \(eff)")
+                        .font(Theme.cardSubtitle)
                         .foregroundStyle(vm.selectedMode.accentColor)
                 }
             }
 
             // Strength display with +/- buttons
-            HStack(spacing: 24) {
+            HStack(spacing: 20) {
                 Button {
                     vm.setStrength(vm.strength - 1)
                 } label: {
                     Image(systemName: "minus")
-                        .font(.title2.weight(.medium))
-                        .frame(width: 52, height: 52)
+                        .font(.body.weight(.medium))
+                        .frame(width: 48, height: 48)
                 }
                 .glassEffect(.regular.interactive(), in: .circle)
 
                 // Strength badge
                 Text("\(vm.strength)")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .font(Theme.heroNumber)
                     .foregroundStyle(.white)
-                    .frame(width: 80, height: 52)
+                    .frame(width: 76, height: 48)
                     .glassEffect(.regular.tint(Theme.accentBlue), in: .capsule)
                     .contentTransition(.numericText())
                     .animation(.default, value: vm.strength)
@@ -41,17 +43,17 @@ struct StrengthCardView: View {
                     vm.setStrength(vm.strength + 1)
                 } label: {
                     Image(systemName: "plus")
-                        .font(.title2.weight(.medium))
-                        .frame(width: 52, height: 52)
+                        .font(.body.weight(.medium))
+                        .frame(width: 48, height: 48)
                 }
                 .glassEffect(.regular.interactive(), in: .circle)
             }
 
             // Slider
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
                 Text("1")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(Theme.textSecondary)
+                    .font(.caption2.weight(.semibold).monospacedDigit())
+                    .foregroundStyle(Theme.textTertiary)
 
                 Slider(
                     value: Binding(
@@ -64,8 +66,8 @@ struct StrengthCardView: View {
                 .tint(Theme.accentBlue)
 
                 Text("9")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(Theme.textSecondary)
+                    .font(.caption2.weight(.semibold).monospacedDigit())
+                    .foregroundStyle(Theme.textTertiary)
             }
         }
         .padding(24)

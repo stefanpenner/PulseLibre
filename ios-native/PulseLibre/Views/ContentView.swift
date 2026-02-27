@@ -9,7 +9,7 @@ struct ContentView: View {
                 .ignoresSafeArea()
 
             GlassEffectContainer {
-                VStack(spacing: 20) {
+                VStack(spacing: 16) {
                     StatusBarView(vm: vm)
                     ModePicker(vm: vm)
                     ModeDescriptionView(mode: vm.selectedMode)
@@ -24,8 +24,8 @@ struct ContentView: View {
                     ActionButtonView(vm: vm)
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 16)
-                .padding(.bottom, 40)
+                .padding(.top, 12)
+                .padding(.bottom, 36)
             }
         }
         .preferredColorScheme(.dark)
@@ -36,25 +36,26 @@ private struct ModeDescriptionView: View {
     let mode: StimulationMode
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 5) {
             Text(mode.summary)
-                .font(.caption)
+                .font(.caption2)
                 .foregroundStyle(Theme.textSecondary)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 8)
+                .padding(.horizontal, 12)
 
             if !mode.researchLinks.isEmpty {
-                VStack(spacing: 3) {
-                    Text("Research · Evidence: \(mode.evidenceLevel)")
-                        .font(.caption2.weight(.semibold))
-                        .foregroundStyle(mode.accentColor.opacity(0.8))
+                VStack(spacing: 2) {
+                    Text("Evidence: \(mode.evidenceLevel)")
+                        .font(.system(size: 10, weight: .semibold, design: .rounded))
+                        .foregroundStyle(mode.accentColor.opacity(0.7))
+                        .tracking(0.3)
 
                     ForEach(mode.researchLinks, id: \.url) { link in
                         if let url = URL(string: link.url) {
                             Link(destination: url) {
                                 Text(link.label)
-                                    .font(.caption2)
-                                    .foregroundStyle(Theme.accentBlue.opacity(0.8))
+                                    .font(.system(size: 9, weight: .regular))
+                                    .foregroundStyle(Theme.accentBlue.opacity(0.7))
                                     .underline()
                             }
                         }

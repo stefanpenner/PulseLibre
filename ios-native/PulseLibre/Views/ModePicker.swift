@@ -3,9 +3,11 @@ import SwiftUI
 struct ModePicker: View {
     @ObservedObject var vm: SessionViewModel
 
+    private var isLocked: Bool { vm.isRunning || vm.isPaused }
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
+            HStack(spacing: 8) {
                 ForEach(StimulationMode.allCases) { mode in
                     ModeCard(
                         mode: mode,
@@ -16,8 +18,8 @@ struct ModePicker: View {
             }
             .padding(.horizontal, 4)
         }
-        .disabled(vm.isRunning || vm.isPaused)
-        .opacity(vm.isRunning || vm.isPaused ? 0.5 : 1)
+        .disabled(isLocked)
+        .opacity(isLocked ? 0.5 : 1)
     }
 }
 
@@ -28,18 +30,18 @@ private struct ModeCard: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 6) {
+            VStack(spacing: 5) {
                 Image(systemName: mode.icon)
-                    .font(.title3)
-                    .frame(height: 24)
+                    .font(.callout)
+                    .frame(height: 22)
 
                 Text(mode.name)
-                    .font(.caption2.weight(.medium))
+                    .font(.system(size: 10, weight: .medium, design: .rounded))
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
             }
             .foregroundStyle(isSelected ? .white : Theme.textSecondary)
-            .frame(width: 72, height: 64)
+            .frame(width: 70, height: 60)
             .glassEffect(
                 isSelected
                     ? .regular.tint(mode.accentColor)

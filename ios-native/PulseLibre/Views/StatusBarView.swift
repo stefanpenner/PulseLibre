@@ -13,7 +13,7 @@ struct StatusBarView: View {
                     .shadow(color: vm.ble.isConnected ? Theme.connectedGreen.opacity(0.6) : Theme.disconnectedRed.opacity(0.6), radius: 4)
 
                 Text(vm.ble.isConnected ? "Connected" : "Disconnected")
-                    .font(.caption)
+                    .font(.caption2.weight(.medium))
                     .foregroundStyle(Theme.textSecondary)
             }
 
@@ -23,23 +23,30 @@ struct StatusBarView: View {
             if let pct = vm.ble.batteryPercentage {
                 HStack(spacing: 4) {
                     Image(systemName: batteryIcon(pct))
-                        .font(.caption)
+                        .font(.caption2)
                         .foregroundStyle(Theme.textSecondary)
-                    Text("\(pct)%")
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(Theme.textSecondary)
-                }
-            }
 
-            // Charging
-            if let charging = vm.ble.isCharging, charging {
-                Image(systemName: "bolt.fill")
-                    .font(.caption)
-                    .foregroundStyle(Theme.accentTeal)
+                    if let v = vm.ble.batteryVoltage {
+                        Text(String(format: "%.2fV", v))
+                            .font(.caption2.monospacedDigit().weight(.medium))
+                            .foregroundStyle(Theme.textTertiary)
+                    }
+
+                    Text("\(pct)%")
+                        .font(.caption2.monospacedDigit().weight(.medium))
+                        .foregroundStyle(Theme.textSecondary)
+
+                    // Charging
+                    if let charging = vm.ble.isCharging, charging {
+                        Image(systemName: "bolt.fill")
+                            .font(.caption2)
+                            .foregroundStyle(Theme.accentTeal)
+                    }
+                }
             }
         }
         .padding(.horizontal, 20)
-        .padding(.vertical, 14)
+        .padding(.vertical, 12)
         .glassEffect(.regular, in: .capsule)
     }
 

@@ -3,63 +3,67 @@ import SwiftUI
 struct TimerCardView: View {
     @ObservedObject var vm: SessionViewModel
 
+    private var isLocked: Bool { vm.isRunning || vm.isPaused }
+
     var body: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 2) {
-                Text("Session Timer")
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(Theme.textSecondary)
+        VStack(spacing: 14) {
+            // Section header
+            VStack(spacing: 4) {
+                Text("SESSION TIMER")
+                    .font(Theme.sectionLabel)
+                    .foregroundStyle(Theme.textTertiary)
+                    .tracking(1.5)
 
                 if vm.selectedMode != .custom {
                     Text(vm.selectedMode.name)
-                        .font(.caption.weight(.semibold))
+                        .font(Theme.cardSubtitle)
                         .foregroundStyle(vm.selectedMode.accentColor)
                 }
             }
 
-            HStack(spacing: 32) {
+            HStack(spacing: 28) {
                 // Minus button
                 Button {
                     vm.decreaseTimer()
                 } label: {
                     Image(systemName: "minus")
-                        .font(.title2.weight(.medium))
-                        .frame(width: 52, height: 52)
+                        .font(.body.weight(.medium))
+                        .frame(width: 48, height: 48)
                 }
                 .glassEffect(.regular.interactive(), in: .circle)
-                .disabled(vm.isRunning || vm.isPaused)
-                .opacity(vm.isRunning || vm.isPaused ? 0.3 : 1)
+                .disabled(isLocked)
+                .opacity(isLocked ? 0.25 : 1)
 
                 // Time display
-                VStack(spacing: 10) {
+                VStack(spacing: 8) {
                     Text(vm.displayTime)
-                        .font(.system(size: 56, weight: .bold, design: .monospaced))
+                        .font(Theme.heroTimer)
                         .foregroundStyle(vm.isPaused ? Theme.textSecondary : Theme.textPrimary)
                         .contentTransition(.numericText())
                         .animation(.default, value: vm.remainingSeconds)
 
                     // Progress bar
-                    if vm.isRunning || vm.isPaused {
+                    if isLocked {
                         GeometryReader { geo in
                             Capsule()
-                                .fill(Color.white.opacity(0.15))
-                                .frame(height: 4)
+                                .fill(Color.white.opacity(0.1))
+                                .frame(height: 3)
                                 .overlay(alignment: .leading) {
                                     Capsule()
-                                        .fill(Theme.accentTeal)
-                                        .shadow(color: Theme.accentTeal.opacity(0.5), radius: 4)
+                                        .fill(vm.selectedMode.accentColor)
+                                        .shadow(color: vm.selectedMode.accentColor.opacity(0.4), radius: 4)
                                         .frame(width: geo.size.width * vm.progress)
                                         .animation(.linear(duration: 1), value: vm.progress)
                                 }
                         }
-                        .frame(height: 4)
+                        .frame(height: 3)
                     }
 
                     // Mode status
-                    if (vm.isRunning || vm.isPaused) && !vm.modeStatus.isEmpty {
+                    if isLocked && !vm.modeStatus.isEmpty {
                         Text(vm.isPaused ? "Paused" : vm.modeStatus)
-                            .font(.caption.weight(.medium))
-                            .foregroundStyle(vm.isPaused ? Theme.accentAmber : vm.selectedMode.accentColor)
+                            .font(Theme.statusLabel)
+                            .foregroundStyle(vm.isPaused ? Theme.accentAmber : vm.selectedMode.accentColor.opacity(0.8))
                             .contentTransition(.opacity)
                             .animation(.default, value: vm.modeStatus)
                     }
@@ -71,12 +75,12 @@ struct TimerCardView: View {
                     vm.increaseTimer()
                 } label: {
                     Image(systemName: "plus")
-                        .font(.title2.weight(.medium))
-                        .frame(width: 52, height: 52)
+                        .font(.body.weight(.medium))
+                        .frame(width: 48, height: 48)
                 }
                 .glassEffect(.regular.interactive(), in: .circle)
-                .disabled(vm.isRunning || vm.isPaused)
-                .opacity(vm.isRunning || vm.isPaused ? 0.3 : 1)
+                .disabled(isLocked)
+                .opacity(isLocked ? 0.25 : 1)
             }
         }
         .padding(24)
