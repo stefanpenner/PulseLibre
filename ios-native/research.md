@@ -1,4 +1,4 @@
-# PulseLibre Stimulation Modes — Research Summary
+# OpenPulse Stimulation Modes — Research Summary
 
 ## BLE Protocol Reality
 
@@ -143,7 +143,7 @@ Pulsetto claims different carrier frequencies per mode (4,500–5,200 Hz), but t
 
 ### 6. Atrial Fibrillation (AF) — 60 min
 
-**NOTE: This mode requires a different device.** The Pulsetto stimulates the cervical vagus via the neck. All AF evidence is for **auricular (ear) stimulation at the tragus**. This section documents the protocol for use with a programmable TENS + tragus ear clip electrode, with PulseLibre serving as a session timer and adherence tracker.
+**NOTE: This mode requires a different device.** The Pulsetto stimulates the cervical vagus via the neck. All AF evidence is for **auricular (ear) stimulation at the tragus**. This section documents the protocol for use with a programmable TENS + tragus ear clip electrode, with OpenPulse serving as a session timer and adherence tracker.
 
 | Parameter | Value | Evidence |
 |-----------|-------|----------|
@@ -188,7 +188,7 @@ The Pulsetto stimulates the cervical vagus nerve through the neck. All AF eviden
 |-----------|---------|-------------|
 | Programmable TENS (20 Hz, 200 us) | TragusClip Kit 1 (EV806P TENS + ear clip) | ~$40-50 |
 | Tragus ear clip electrode (if separate) | TENSPros snap-connector ear clip | ~$15 |
-| PulseLibre app | Session timer + adherence tracker | $0 |
+| OpenPulse app | Session timer + adherence tracker | $0 |
 
 **Advanced hardware (full BLE control):**
 
