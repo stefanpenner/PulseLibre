@@ -12,6 +12,7 @@ final class SessionViewModel: ObservableObject {
 
     // Mode support
     @Published var selectedMode: StimulationMode = .custom
+    @Published var selectedFeeling: AutonomicState? = nil
     @Published var stimulationActive = false
     @Published var effectiveStrength: Int? = nil
     @Published var breathingPhase: BreathingPhase? = nil
@@ -68,6 +69,12 @@ final class SessionViewModel: ObservableObject {
         selectedMode = mode
         timerMinutes = mode.defaultDurationMinutes
         strength = mode.defaultStrength
+    }
+
+    func selectFeeling(_ state: AutonomicState) {
+        guard !isRunning, !isPaused else { return }
+        selectedFeeling = state
+        selectMode(state.primaryMode)
     }
 
     // MARK: - Actions
