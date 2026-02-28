@@ -4,9 +4,11 @@ A React Native application to control the [Pulsetto device](https://juraj.bednar
 
 This mobile app is designed for both Android and iOS platforms and mirrors the functionality of the desktop app available [here](https://github.com/jooray/pulse-libre-desktop).
 
-## Screenshot
+## Screenshots
 
-![Pulse-Libre Mobile Screenshot](images/screenshot.png)
+| Dark mode | Light mode |
+|---|---|
+| ![Dark mode](images/screenshot-dark.png) | ![Light mode](images/screenshot-light.png) |
 
 ## Installation on Android
 

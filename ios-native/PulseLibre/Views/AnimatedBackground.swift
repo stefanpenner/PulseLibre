@@ -2,28 +2,47 @@ import SwiftUI
 
 struct AnimatedBackground: View {
     var feeling: AutonomicState?
+    @Environment(\.colorScheme) private var colorScheme
 
-    private static let base = Color(hex: 0x0A0E1A)
+    private static let darkBase = Color(hex: 0x0A0E1A)
+    private static let lightBase = Color(hex: 0xF5F0E8)
+
+    private var base: Color {
+        colorScheme == .dark ? Self.darkBase : Self.lightBase
+    }
 
     private var meshColors: [Color] {
         guard let accent = feeling?.accentColor else {
-            let mid1 = Color(hex: 0x0D1225)
-            let mid2 = Color(hex: 0x0F1A2E)
-            let mid3 = Color(hex: 0x162040)
-            let mid4 = Color(hex: 0x0E1628)
-            let mid5 = Color(hex: 0x111B30)
-            return [
-                Self.base, mid1,      Self.base,
-                mid2,      mid3,      mid4,
-                Self.base, mid5,      Self.base,
-            ]
+            if colorScheme == .dark {
+                let mid1 = Color(hex: 0x0D1225)
+                let mid2 = Color(hex: 0x0F1A2E)
+                let mid3 = Color(hex: 0x162040)
+                let mid4 = Color(hex: 0x0E1628)
+                let mid5 = Color(hex: 0x111B30)
+                return [
+                    base, mid1,  base,
+                    mid2, mid3,  mid4,
+                    base, mid5,  base,
+                ]
+            } else {
+                let mid1 = Color(hex: 0xF0EBE0)
+                let mid2 = Color(hex: 0xEDE7DB)
+                let mid3 = Color(hex: 0xF2ECE3)
+                let mid4 = Color(hex: 0xEBE4D8)
+                let mid5 = Color(hex: 0xEFE8DD)
+                return [
+                    base, mid1,  base,
+                    mid2, mid3,  mid4,
+                    base, mid5,  base,
+                ]
+            }
         }
-        let tintLight = accent.opacity(0.15)
-        let tintFaint = accent.opacity(0.07)
+        let tintLight = accent.opacity(colorScheme == .dark ? 0.15 : 0.10)
+        let tintFaint = accent.opacity(colorScheme == .dark ? 0.07 : 0.05)
         return [
-            Self.base,  tintFaint,  Self.base,
-            tintFaint,  tintLight,  tintFaint,
-            Self.base,  tintFaint,  Self.base,
+            base,      tintFaint, base,
+            tintFaint, tintLight, tintFaint,
+            base,      tintFaint, base,
         ]
     }
 

@@ -1,9 +1,20 @@
 import SwiftUI
+import UIKit
 
 enum Theme {
+    // MARK: - Adaptive helper
+
+    static func adaptive(light: UInt, dark: UInt) -> Color {
+        Color(UIColor { traits in
+            traits.userInterfaceStyle == .dark
+                ? UIColor(Color(hex: dark))
+                : UIColor(Color(hex: light))
+        })
+    }
+
     // Background gradient
-    static let backgroundTop = Color(hex: 0x0A0E1A)
-    static let backgroundBottom = Color(hex: 0x141B2D)
+    static let backgroundTop = adaptive(light: 0xF5F0E8, dark: 0x0A0E1A)
+    static let backgroundBottom = adaptive(light: 0xEDE7DB, dark: 0x141B2D)
 
     // Accent colors
     static let accentTeal = Color(hex: 0x00E5CC)
@@ -16,9 +27,16 @@ enum Theme {
     static let accentCyan = Color(hex: 0x06B6D4)
 
     // Text
-    static let textPrimary = Color.white
-    static let textSecondary = Color(hex: 0x9CA3AF)
-    static let textTertiary = Color(hex: 0x6B7280)
+    static let textPrimary = adaptive(light: 0x1A1A2E, dark: 0xFFFFFF)
+    static let textSecondary = adaptive(light: 0x5A5A6E, dark: 0x9CA3AF)
+    static let textTertiary = adaptive(light: 0x8A8A9E, dark: 0x6B7280)
+
+    // Glass overlay
+    static let glassOverlay = Color(UIColor { traits in
+        traits.userInterfaceStyle == .dark
+            ? UIColor(white: 1.0, alpha: 0.1)
+            : UIColor(white: 0.0, alpha: 0.06)
+    })
 
     // Status
     static let connectedGreen = Color(hex: 0x10B981)

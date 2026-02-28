@@ -46,7 +46,7 @@ struct TimerCardView: View {
                     if isLocked {
                         GeometryReader { geo in
                             Capsule()
-                                .fill(Color.white.opacity(0.1))
+                                .fill(Theme.glassOverlay)
                                 .frame(height: 3)
                                 .overlay(alignment: .leading) {
                                     Capsule()

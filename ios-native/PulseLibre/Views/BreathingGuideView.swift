@@ -35,7 +35,7 @@ struct BreathingGuideView: View {
             ZStack {
                 // Outer ring
                 Circle()
-                    .stroke(Color.white.opacity(0.08), lineWidth: 1.5)
+                    .stroke(Theme.glassOverlay, lineWidth: 1.5)
                     .frame(width: 140, height: 140)
 
                 // Breathing circle
@@ -43,7 +43,7 @@ struct BreathingGuideView: View {
                     .fill(
                         isActive
                             ? Theme.accentCyan.opacity(0.25)
-                            : Color.white.opacity(0.08)
+                            : Theme.glassOverlay
                     )
                     .frame(width: 120, height: 120)
                     .scaleEffect(circleScale)
@@ -80,7 +80,7 @@ struct BreathingGuideView: View {
             // Progress bar
             GeometryReader { geo in
                 Capsule()
-                    .fill(Color.white.opacity(0.1))
+                    .fill(Theme.glassOverlay)
                     .frame(height: 3)
                     .overlay(alignment: .leading) {
                         Capsule()
